@@ -21,7 +21,6 @@ export class DomainComponent implements OnInit {
     private fb: FormBuilder,
     private domainService: DomainService,
     private notifyService: NotifyService,
-    private router: RouterModule
   ) { }
 
   ngOnInit() {
