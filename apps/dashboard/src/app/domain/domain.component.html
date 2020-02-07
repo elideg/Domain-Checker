@@ -1,0 +1,64 @@
+<div class="container justify-content-center mt-5 d-flex">
+  <mat-card class="custom-background col-8">
+    <mat-card-header>
+      <mat-card-title>
+        <h3>Domain Checker</h3>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content >
+        <p>All domain searchs must include a valid TLDs ex. ".com", ".net"</p>
+        <form [formGroup]="form" (submit)="search()">
+
+        <mat-form-field appearance="outline" color="accent">
+          <mat-label>Check Domain Availability</mat-label>
+          <input matInput formControlName="domainSearch">
+          <mat-error *ngIf="form.get('domainSearch').hasError('required')">Required Field</mat-error>
+        </mat-form-field>
+        <button mat-icon-button color="accent" [disabled]="form.invalid" type="submit" class="ml-2">
+          <mat-icon>search</mat-icon>
+        </button>
+
+      </form>
+
+      <mat-card-content *ngIf="domainSearchResults$">
+        <div class="justify-content-center d-flex align-items-center align-content-center">
+          <h4 class="border-bottom">Search Results</h4>
+
+          <div *ngIf="domainSearchResults$.isAvailable; else elseBlock">
+            <mat-icon color="accent">check_circle</mat-icon>
+          </div>
+          <p style="color: #FF671B" *ngIf="domainSearchResults$.isAvailable"> Domain Is Available</p>
+          <ng-template #elseBlock>
+            <mat-icon style="color: red">block</mat-icon>
+          </ng-template>
+          <p style="color: red" *ngIf="!domainSearchResults$.isAvailable"> Domain Not Available</p>
+
+        </div>
+          <div>
+
+            <div *ngIf="!domainSearchResults$.isAvailable">
+              <h3 class="border-bottom">Company Register</h3>
+              <p>{{domainSearchResults$.registrar}}</p>
+            </div>
+
+            <div>
+              <h3 class="border-bottom">Domain Name</h3>
+              <p>{{domainSearchResults$.name}}</p>
+            </div>
+
+            <div  *ngIf="!domainSearchResults$.isAvailable">
+              <h3 class="border-bottom">Creation Date</h3>
+              <p>{{domainSearchResults$.creationDate}}</p>
+            </div>
+
+            <div *ngIf="!domainSearchResults$.isAvailable">
+              <h3 class="border-bottom" >Experation Date</h3>
+              <p>{{domainSearchResults$.expirationDate}}</p>
+            </div>
+
+          </div>
+        </mat-card-content>
+
+    </mat-card-content>
+  </mat-card>
+</div>
